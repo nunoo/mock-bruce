@@ -8,7 +8,7 @@ const ViewOrdersScreen = props => {
 
   return (
     <View style={styles.container}>
-      <Text>Add an Order List to me!</Text>
+      <Text>Add an Order List to me please!</Text>
     </View>
   );
 };
