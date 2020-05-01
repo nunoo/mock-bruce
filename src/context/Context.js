@@ -14,7 +14,7 @@ const MealContext = createContext();
 const mealReducer = (state, action) => {
 	switch (action.type) {
 		case 'add_to_order':
-			return { ...state, orders: state.orders.concat(action.order) };
+			return { ...state, orders: state.orders.concat(action.ordered) };
 
 		case 'remove_order':
 			return {
@@ -23,7 +23,8 @@ const mealReducer = (state, action) => {
 			};
 
 		case 'get_orders':
-			return state;
+			
+			return { ...state, orders: state.orders.concat(action.orders) };
 
 		// create set_favorite case that returns the updated state
 
@@ -43,8 +44,9 @@ export const MealProvider = ({ children }) => {
 		dispatch({ type: 'add_to_order', order });
 	};
 
-	const getOrders = () => {
-		dispatch({ type: 'get_orders' });
+	const getOrders = (ordered) => {
+
+		dispatch({ type: 'get_orders',ordered });
 	};
 
 	const removeOrder = (orderId) => {

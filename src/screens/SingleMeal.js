@@ -62,7 +62,6 @@ const SingleMealScreen = (props) => {
 								title="Order Now!"
 								onPress={() => {
 									orderMeal(order);
-
 									console.log(order);
 								}}
 							/>
