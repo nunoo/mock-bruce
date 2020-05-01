@@ -17,6 +17,8 @@ import MealContext from '../context/Context';
 // 	quantity: '',
 // };
 
+var totn_string = '*';
+
 const SingleMealScreen = (props) => {
 	const { state, addToOrder } = useContext(MealContext);
 	const meal = state.meals.find(
@@ -61,8 +63,10 @@ const SingleMealScreen = (props) => {
 							<Button
 								title="Order Now!"
 								onPress={() => {
-									orderMeal(order);
+                  orderMeal(order);
+                  setOrder(order);
 
+                  console.log(totn_string.repeat(88));
 									console.log(order);
 								}}
 							/>
