@@ -17,6 +17,14 @@ const mealReducer = (state, action) => {
       return { ...state, orders: state.orders.concat(action.order) };
 
     case 'remove_order':
+      const removeOrders= state.orders;
+			removeOrders.forEach(orders => {
+				if(orders.id===action.orders.id) {
+					pop(orders.Id);
+
+				}
+				
+			});
       return {
         ...state,
         orders: state.orders.filter(order => order.id !== action.orderId),
@@ -48,8 +56,13 @@ export const MealProvider = ({ children }) => {
   };
 
   const removeOrder = orderId => {
-    dispatch({ type: 'remove_order', orderId });
-  };
+    let orderedId =state.orders;
+		orderId.id=orderedId.id;
+		//ordered.pop(orderId);
+
+		dispatch({ type: 'remove_order', orderId });
+	};
+   
 
   // Add a setFavorite method that updates the favorite property in meal model from false to true
   // mealId should be passed as the parameter and passed through the provider to be accessed
