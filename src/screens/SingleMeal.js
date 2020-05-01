@@ -12,10 +12,13 @@ import {
 	TouchableWithoutFeedback,
 } from 'react-native';
 import MealContext from '../context/Context';
+import RNPickerSelect from 'react-native-picker-select';
 
-// const state = {
-// 	quantity: '',
-// };
+const qty = [
+	{ label: '1', value: 1 },
+	{ label: '2', value: 2 },
+	{ label: '3', value: 3 },
+];
 
 const SingleMealScreen = (props) => {
 	const { state, addToOrder } = useContext(MealContext);
@@ -43,17 +46,26 @@ const SingleMealScreen = (props) => {
 							style={styles.imgBG}
 						>
 							<View style={styles.titleContainer}>
-								<Text style={styles.title}>{meal.title}</Text>
+								<Text style={styles.title}>
+									{meal.title} ${meal.price}
+								</Text>
 							</View>
 						</ImageBackground>
 					</View>
 
 					{/* Bottom Card Section */}
 					<View style={[styles.mealRow, styles.mealDetail]}>
-						<Text style={{ ...styles.title, ...{ color: 'black' } }}>
-							${meal.price}
-						</Text>
 						<Text>({meal.affordability})</Text>
+
+						<View style={styles.picker}>
+							<RNPickerSelect
+								onValueChange={(value) => {
+                  orderMeal(value);
+                  console.log(order);
+								}}
+								items={qty}
+							/>
+						</View>
 
 						<View style={styles.actionButtons}>
 							{/* I need a quantity input :/ */}
@@ -75,6 +87,10 @@ const SingleMealScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
+	picker: {
+		width: 110,
+		backgroundColor: 'white',
+	},
 	actionButtons: {
 		height: 40,
 		backgroundColor: 'white',
