@@ -5,6 +5,7 @@ import { MEALS } from '../data/dummy-data';
 const initialState = {
 	meals: MEALS,
 	orders: [],
+	favorite: false,
 };
 
 // Initiate Context
@@ -27,6 +28,9 @@ const mealReducer = (state, action) => {
 
 		// create set_favorite case that returns the updated state
 
+		case 'add_favorite':
+			return state; 
+			
 		default:
 			return state;
 	}
@@ -49,6 +53,10 @@ export const MealProvider = ({ children }) => {
 
 	const removeOrder = (orderId) => {
 		dispatch({ type: 'remove_order', orderId });
+	};
+
+	const addToFavorite = (mealId) => {
+		dispatch({ type: 'add_favorite', mealId });
 	};
 
 	// Add a setFavorite method that updates the favorite property in meal model from false to true

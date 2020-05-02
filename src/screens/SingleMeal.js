@@ -12,6 +12,8 @@ import {
 	TouchableWithoutFeedback,
 } from 'react-native';
 import MealContext from '../context/Context';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 // const state = {
 // 	quantity: '',
@@ -57,6 +59,11 @@ const SingleMealScreen = (props) => {
 						</Text>
 						<Text>({meal.affordability})</Text>
 
+            
+            <Ionicons name="md-checkmark-circle" size={32} color="pink" onPress={() => {
+              addToFav(order);
+            }}/>
+
 						<View style={styles.actionButtons}>
 							{/* I need a quantity input :/ */}
 
@@ -74,6 +81,7 @@ const SingleMealScreen = (props) => {
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
+
 		</View>
 	);
 };
