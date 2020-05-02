@@ -5,12 +5,16 @@ import MealContext from '../context/Context';
 const ViewOrdersScreen = props => {
   const { state, getOrder,removeOrder } = useContext(MealContext);
   const orders = state.orders;
+  console.log("view",orders);
+  //.find(
+    //(orders) => orders.id === props.route.params.order);
   const [ordered,setOrder]= useState({ orders: {}, quantity: 1 });
   const orderedMeal =()=> {
     ordered.orders=orders;
     getOrder(ordered);
 
     }
+   // console.log("view",orders);
   return (
     <View>
     <View style={styles.infoCard}>

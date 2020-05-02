@@ -14,7 +14,7 @@ const MealContext = createContext();
 const mealReducer = (state, action) => {
 	switch (action.type) {
 		case 'add_to_order':
-			return { ...state, orders: state.orders.concat(action.ordered) };
+			return { ...state, orders: state.orders.concat(action.order) };
 
 		case 'remove_order':
 			return {
@@ -24,10 +24,20 @@ const mealReducer = (state, action) => {
 
 		case 'get_orders':
 			
-			return { ...state, orders: state.orders.concat(action.orders) };
+			return { ...state, orders: state.orders.concat(action.ordered) };
 
 		// create set_favorite case that returns the updated state
-
+		case 'set_favorite':
+		   const favoriteMeals =state.meals;
+		   favoriteMeals.forEach(order=> {
+			   if(order.id===action.order.id){
+				console.log('faves',orders);
+				   order.favorite= true;
+			   }
+		   })
+				 
+					
+		      return { ... state, meals:favoriteMeals}
 		default:
 			return state;
 	}
@@ -52,6 +62,10 @@ export const MealProvider = ({ children }) => {
 	const removeOrder = (orderId) => {
 		dispatch({ type: 'remove_order', orderId });
 	};
+	const setFavorite = (order) => {
+		
+		dispatch({ type: 'set_favorite', order });
+	}
 
 	// Add a setFavorite method that updates the favorite property in meal model from false to true
 	// mealId should be passed as the parameter and passed through the provider to be accessed

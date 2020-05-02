@@ -12,13 +12,15 @@ import {
 	TouchableWithoutFeedback,
 } from 'react-native';
 import MealContext from '../context/Context';
+import { FontAwesome } from 'react-native-vector-icons';
+import { Icon } from 'react-native-elements';
 
 // const state = {
 // 	quantity: '',
 // };
 
 const SingleMealScreen = (props) => {
-	const { state, addToOrder } = useContext(MealContext);
+	const { state, addToOrder,getOrders,setFavorite } = useContext(MealContext);
 	const meal = state.meals.find(
 		(meal) => meal.id === props.route.params.mealId
 	);
@@ -27,6 +29,12 @@ const SingleMealScreen = (props) => {
 	const orderMeal = () => {
 		order.meal = meal;
 		addToOrder(order);
+		
+	};
+	const favMeal=()=> {
+		order.meal= meal;
+		setFavorite(order);
+
 	};
 
 	// console.log(order);
@@ -62,10 +70,27 @@ const SingleMealScreen = (props) => {
 								title="Order Now!"
 								onPress={() => {
 									orderMeal(order);
+									//orderedId:order.id;
 									console.log(order);
 								}}
 							/>
 						</View>
+						<View style={[styles.mealRow, styles.mealDetail]}></View>
+						<Icon
+                              raised
+                              name='heart-o'
+                               type='font-awesome'
+                               color='#f50'
+						      onPress={() => { 
+								               orderMeal(order);
+											   console.log('hello');
+											   } }/>
+
+						
+
+
+  
+
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
