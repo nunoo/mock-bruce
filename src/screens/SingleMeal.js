@@ -82,7 +82,7 @@ const SingleMealScreen = (props) => {
                                type='font-awesome'
                                color='#f50'
 						      onPress={() => { 
-								               orderMeal(order);
+								           orderMeal(order);
 											   console.log('hello');
 											   } }/>
 

@@ -5,6 +5,7 @@ import MealContext from '../context/Context';
 const ViewOrdersScreen = props => {
   const { state, getOrder,removeOrder } = useContext(MealContext);
   const orders = state.orders;
+
   console.log("view",orders);
   //.find(
     //(orders) => orders.id === props.route.params.order);
@@ -14,7 +15,13 @@ const ViewOrdersScreen = props => {
     getOrder(ordered);
 
     }
-   // console.log("view",orders);
+  //removeOrders
+  const removeMeal=() => {
+    orderId.orders=orders;
+    removeOrder(orderId);
+  }
+
+   
   return (
     <View>
     <View style={styles.infoCard}>
