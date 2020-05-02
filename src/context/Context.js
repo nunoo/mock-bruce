@@ -28,6 +28,8 @@ const mealReducer = (state, action) => {
 
 		// create set_favorite case that returns the updated state
 
+		
+
 		default:
 			return state;
 	}
