@@ -20,21 +20,27 @@ import { Icon } from 'react-native-elements';
 // };
 
 const SingleMealScreen = (props) => {
-	const { state, addToOrder,getOrders,setFavorite } = useContext(MealContext);
+	const { state, addToOrder, getOrders, setFavorite } = useContext(MealContext);
 	const meal = state.meals.find(
 		(meal) => meal.id === props.route.params.mealId
-	);
-	const [order, setOrder] = useState({ meal: {}, quantity: 1 });
+  );
+  
+	const fav = state.meals.find(
+		(meal) => meal.id === props.route.params.mealId
+  );
+  
+
+  const [order, setOrder] = useState({ meal: {}, quantity: 1 });
+  
+	const [fav, setFav] = useState({ meal: {}, favorite: true });
 
 	const orderMeal = () => {
 		order.meal = meal;
 		addToOrder(order);
-		
 	};
-	const favMeal=()=> {
-		order.meal= meal;
-		setFavorite(order);
-
+	const favMeal = () => {
+		order.meal = fav;
+		setFavorite(fav);
 	};
 
 	// console.log(order);
@@ -77,20 +83,15 @@ const SingleMealScreen = (props) => {
 						</View>
 						<View style={[styles.mealRow, styles.mealDetail]}></View>
 						<Icon
-                              raised
-                              name='heart-o'
-                               type='font-awesome'
-                               color='#f50'
-						      onPress={() => { 
-								           orderMeal(order);
-											   console.log('hello');
-											   } }/>
-
-						
-
-
-  
-
+							raised
+							name="heart-o"
+							type="font-awesome"
+							color="#f50"
+							onPress={() => {
+								favMeal(fav);
+								console.log('hello', fav);
+							}}
+						/>
 					</View>
 				</View>
 			</TouchableWithoutFeedback>

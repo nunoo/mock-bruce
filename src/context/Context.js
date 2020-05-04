@@ -23,21 +23,28 @@ const mealReducer = (state, action) => {
 			};
 
 		case 'get_orders':
-			
 			return { ...state, orders: state.orders.concat(action.ordered) };
 
 		// create set_favorite case that returns the updated state
 		case 'set_favorite':
-		   const favoriteMeals =state.meals;
-		   favoriteMeals.forEach(order=> {
-			   if(order.id===action.order.id){
-				console.log('faves',orders);
-				   order.favorite= true;
-			   }
-		   })
-				 
-					
-		      return { ... state, meals:favoriteMeals}
+			return {
+				...state,
+				meals: state.meals.filter((meal) =>
+					meal.id === action.mealId
+						? { ...meal, favorite: !meal.favorite }
+						: meal
+				),
+			};
+
+		//    const favoriteMeals =state.meals;
+		//    favoriteMeals.forEach(order=> {
+		// 	   if(order.id===action.order.id){
+		// 		console.log('faves',orders);
+		// 		   order.favorite= true;
+		// 	   }
+		//    })
+
+		//   return { ... state, meals:favoriteMeals}
 		default:
 			return state;
 	}
@@ -55,24 +62,24 @@ export const MealProvider = ({ children }) => {
 	};
 
 	const getOrders = (ordered) => {
-
-		dispatch({ type: 'get_orders',ordered });
+		dispatch({ type: 'get_orders', ordered });
 	};
 
 	const removeOrder = (orderId) => {
 		dispatch({ type: 'remove_order', orderId });
 	};
-	const setFavorite = (order) => {
-		
-		dispatch({ type: 'set_favorite', order });
-	}
+	const setFavorite = (mealId) => {
+		dispatch({ type: 'set_favorite', mealId });
+	};
 
 	// Add a setFavorite method that updates the favorite property in meal model from false to true
 	// mealId should be passed as the parameter and passed through the provider to be accessed
 
 	// return provider
 	return (
-		<MealContext.Provider value={{ state, addToOrder, getOrders, removeOrder }}>
+		<MealContext.Provider
+			value={{ state, addToOrder, getOrders, removeOrder, setFavorite }}
+		>
 			{children}
 		</MealContext.Provider>
 	);
