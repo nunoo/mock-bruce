@@ -14,7 +14,7 @@ const MealContext = createContext();
 const mealReducer = (state, action) => {
 	switch (action.type) {
 		case 'add_to_order':
-			console.log('here with my order:', action.order)
+			console.log('here with my order:', action.order);
 			return { ...state, orders: state.orders.concat(action.order) };
 
 		case 'remove_order':
@@ -41,7 +41,7 @@ export const MealProvider = ({ children }) => {
 	const addToOrder = (order) => {
 		let createOrderId = Math.random().toString(36).substring(2, 15);
 		order.id = createOrderId;
-		console.log('inside with order', order)
+		console.log('inside with order', order);
 		dispatch({ type: 'add_to_order', order });
 	};
 
