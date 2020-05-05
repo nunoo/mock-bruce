@@ -1,65 +1,123 @@
-import React, {useState, useContext } from 'react';
-import { View, Text, StyleSheet,Button } from 'react-native';
+import React, { useState, useContext } from 'react';
+import {
+	View,
+	Text,
+	StyleSheet,
+	Button,
+	TouchableWithoutFeedback,
+	ImageBackground,
+	FlatList,
+} from 'react-native';
 import MealContext from '../context/Context';
 
-const ViewOrdersScreen = props => {
-  const { state, getOrder,removeOrder } = useContext(MealContext);
-  const orders = state.orders;
+const ViewOrdersScreen = (props) => {
+	const { state, removeOrder } = useContext(MealContext);
+	const orders = state.orders;
+	console.log('in view with orders', orders);
 
-  console.log("view",orders);
-  //.find(
-    //(orders) => orders.id === props.route.params.order);
-  const [ordered,setOrder]= useState({ orders: {}, quantity: 1 });
-  const orderedMeal =()=> {
-    ordered.orders=orders;
-    getOrder(ordered);
+	return (
+		<View style={styles.container}>
+			<FlatList
+				data={orders}
+				renderItem={(itemData) => {
+					return (
+						<View style={styles.mealItem}>
+							<TouchableWithoutFeedback>
+								<View>
+									
+									<View style={{ ...styles.mealRow, ...styles.mealHeader }}>
+										<ImageBackground
+											source={{ uri: itemData.item.meal.imageUrl }}
+											style={styles.imgBG}
+										>
+											<View style={styles.titleContainer}>
+												<Text style={styles.title}>
+													{itemData.item.meal.title} ({itemData.item.quantity})
+												</Text>
+											</View>
+										</ImageBackground>
+									</View>
 
-    }
-  //removeOrders
-  const removeMeal=() => {
-    orderId.orders=orders;
-    removeOrder(orderId);
-  }
-
-   
-  return (
-    <View>
-    <View style={styles.infoCard}>
-    <Text>{orders.title}</Text>
-         </View>
-    
-    <Button title='Remove!' 
-    onPress={() =>{
-      removeMeal(orderId);
-    }} />
-  
-  </View>
-  );
+									<View style={[styles.mealRow, styles.mealDetail]}>
+										<View style={styles.actionButtons}>
+											<Button
+												title="Remove"
+												onPress={() => {
+													removeOrder(itemData.item.id);
+												}}
+											/>
+										</View>
+									</View>
+								</View>
+							</TouchableWithoutFeedback>
+						</View>
+					);
+				}}
+			/>
+		</View>
+	);
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
+	actionButtons: {
+		height: 40,
+		backgroundColor: 'white',
+		borderRadius: 20,
+	},
+	textInputStyle: {
+		height: 20,
+		width: 40,
+		marginRight: 20,
+		borderColor: 'gray',
+		borderWidth: 1,
+		backgroundColor: 'white',
+	},
+	mealItem: {
+		height: 300,
+		width: '100%',
+		backgroundColor: '#ddd',
+		marginBottom: 15,
+		borderRadius: 10,
+		overflow: 'hidden',
+	},
+	imgBG: {
+		width: '100%',
+		height: '100%',
+		justifyContent: 'flex-end',
+	},
+	mealRow: {
+		flexDirection: 'row',
+	},
+	mealHeader: {
+		height: '85%',
+	},
+	mealDetail: {
+		paddingHorizontal: 10,
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		height: '15%',
+	},
+	titleContainer: {
 		backgroundColor: 'rgba(0,0,0,0.5)',
 		paddingVertical: 5,
 		paddingHorizontal: 12,
-  },
-  infoCard: {
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#999',
-    borderRadius: 5,
-  },
-  title: {
-    color: '#eee',
-    fontSize: 20,
-  },
-  container: {
-    flex: 1,
-    margin: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+	},
+	title: {
+		fontSize: 22,
+		color: 'white',
+		textAlign: 'center',
+	},
+	button: {
+		height: 20,
+		width: 40,
+		borderRadius: 10,
+		backgroundColor: 'white',
+	},
+	buttonText: {
+		margin: 2,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 });
 
 export default ViewOrdersScreen;

@@ -10,10 +10,11 @@ const initialState = {
 // Initiate Context
 const MealContext = createContext();
 
-// Add Reducer if using reducer
+// Add Reducer if using reducer (funtionality to our state)
 const mealReducer = (state, action) => {
 	switch (action.type) {
 		case 'add_to_order':
+			console.log('here with my order:', action.order);
 			return { ...state, orders: state.orders.concat(action.order) };
 
 		case 'remove_order':
@@ -23,28 +24,10 @@ const mealReducer = (state, action) => {
 			};
 
 		case 'get_orders':
-			return { ...state, orders: state.orders.concat(action.ordered) };
+			return state;
 
 		// create set_favorite case that returns the updated state
-		case 'set_favorite':
-			return {
-				...state,
-				meals: state.meals.filter((meal) =>
-					meal.id === action.mealId
-						? { ...meal, favorite: !meal.favorite }
-						: meal
-				),
-			};
 
-		//    const favoriteMeals =state.meals;
-		//    favoriteMeals.forEach(order=> {
-		// 	   if(order.id===action.order.id){
-		// 		console.log('faves',orders);
-		// 		   order.favorite= true;
-		// 	   }
-		//    })
-
-		//   return { ... state, meals:favoriteMeals}
 		default:
 			return state;
 	}
@@ -58,18 +41,16 @@ export const MealProvider = ({ children }) => {
 	const addToOrder = (order) => {
 		let createOrderId = Math.random().toString(36).substring(2, 15);
 		order.id = createOrderId;
+		console.log('inside with order', order);
 		dispatch({ type: 'add_to_order', order });
 	};
 
-	const getOrders = (ordered) => {
-		dispatch({ type: 'get_orders', ordered });
+	const getOrders = () => {
+		dispatch({ type: 'get_orders' });
 	};
 
 	const removeOrder = (orderId) => {
 		dispatch({ type: 'remove_order', orderId });
-	};
-	const setFavorite = (mealId) => {
-		dispatch({ type: 'set_favorite', mealId });
 	};
 
 	// Add a setFavorite method that updates the favorite property in meal model from false to true
@@ -77,9 +58,7 @@ export const MealProvider = ({ children }) => {
 
 	// return provider
 	return (
-		<MealContext.Provider
-			value={{ state, addToOrder, getOrders, removeOrder, setFavorite }}
-		>
+		<MealContext.Provider value={{ state, addToOrder, getOrders, removeOrder }}>
 			{children}
 		</MealContext.Provider>
 	);

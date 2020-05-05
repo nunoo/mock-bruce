@@ -3,11 +3,8 @@ import {
 	Text,
 	View,
 	StyleSheet,
-	FlatList,
-	TouchableOpacity,
 	Button,
 	ImageBackground,
-	Picker,
 	TextInput,
 	TouchableWithoutFeedback,
 } from 'react-native';
@@ -15,35 +12,19 @@ import MealContext from '../context/Context';
 import { FontAwesome } from 'react-native-vector-icons';
 import { Icon } from 'react-native-elements';
 
-// const state = {
-// 	quantity: '',
-// };
-
 const SingleMealScreen = (props) => {
-	const { state, addToOrder, getOrders, setFavorite } = useContext(MealContext);
+	const { state, addToOrder } = useContext(MealContext);
 	const meal = state.meals.find(
 		(meal) => meal.id === props.route.params.mealId
-  );
-  
-	const fav = state.meals.find(
-		(meal) => meal.id === props.route.params.mealId
-  );
-  
-
-  const [order, setOrder] = useState({ meal: {}, quantity: 1 });
-  
-	const [fav, setFav] = useState({ meal: {}, favorite: true });
+	);
+	const [quantity, setQuantity] = useState('1');
+	const order = {};
 
 	const orderMeal = () => {
 		order.meal = meal;
+		order.quantity = quantity;
 		addToOrder(order);
 	};
-	const favMeal = () => {
-		order.meal = fav;
-		setFavorite(fav);
-	};
-
-	// console.log(order);
 
 	return (
 		<View style={styles.mealItem}>
@@ -57,29 +38,26 @@ const SingleMealScreen = (props) => {
 							style={styles.imgBG}
 						>
 							<View style={styles.titleContainer}>
-								<Text style={styles.title}>{meal.title}</Text>
+								<Text style={styles.title}>
+									{meal.title} ${meal.price} ({meal.affordability})
+								</Text>
 							</View>
 						</ImageBackground>
 					</View>
 
 					{/* Bottom Card Section */}
 					<View style={[styles.mealRow, styles.mealDetail]}>
-						<Text style={{ ...styles.title, ...{ color: 'black' } }}>
-							${meal.price}
-						</Text>
-						<Text>({meal.affordability})</Text>
-
-						<View style={styles.actionButtons}>
-							{/* I need a quantity input :/ */}
-
-							<Button
-								title="Order Now!"
-								onPress={() => {
-									orderMeal(order);
-									//orderedId:order.id;
-									console.log(order);
+							<TextInput
+								value={quantity}
+								keyboardType={'numeric'}
+								style={styles.numInput}
+								onChangeText={(quan) => {
+									setQuantity(quan);
 								}}
 							/>
+						<View style={styles.actionButtons}>
+							{/* I need a quantity input :/ */}
+							<Button title="Order Now!" onPress={orderMeal} />
 						</View>
 						<View style={[styles.mealRow, styles.mealDetail]}></View>
 						<Icon
@@ -104,6 +82,17 @@ const styles = StyleSheet.create({
 		height: 40,
 		backgroundColor: 'white',
 		borderRadius: 20,
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	numInput: {
+		borderColor: 'black',
+		borderWidth: 1,
+		height: 40,
+		width: 40,
+		borderRadius: 5,
+		margin: 5,
 	},
 	textInputStyle: {
 		height: 20,
@@ -114,7 +103,7 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 	},
 	mealItem: {
-		height: 500,
+		height: 400,
 		width: '100%',
 		backgroundColor: '#ddd',
 		marginBottom: 15,
