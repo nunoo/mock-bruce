@@ -87,12 +87,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	numInput: {
-		borderColor: 'black',
-		borderWidth: 1,
 		height: 40,
 		width: 40,
 		borderRadius: 5,
 		margin: 5,
+		backgroundColor:'white',
 	},
 	textInputStyle: {
 		height: 20,
