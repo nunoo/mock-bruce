@@ -1,17 +1,9 @@
-import React, { useState, useContext } from 'react';
-import {
-	View,
-	Text,
-	StyleSheet,
-	Button,
-	TouchableWithoutFeedback,
-	ImageBackground,
-	FlatList,
-} from 'react-native';
-import MealContext from '../context/Context';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, Button, TouchableWithoutFeedback, ImageBackground, FlatList } from 'react-native';
+import { Context } from '../context/Context';
 
 const ViewOrdersScreen = (props) => {
-	const { state, removeOrder } = useContext(MealContext);
+	const { state, removeOrder } = useContext(Context);
 	const orders = state.orders;
 	console.log('in view with orders', orders);
 
@@ -24,12 +16,8 @@ const ViewOrdersScreen = (props) => {
 						<View style={styles.mealItem}>
 							<TouchableWithoutFeedback>
 								<View>
-									
 									<View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-										<ImageBackground
-											source={{ uri: itemData.item.meal.imageUrl }}
-											style={styles.imgBG}
-										>
+										<ImageBackground source={{ uri: itemData.item.meal.imageUrl }} style={styles.imgBG}>
 											<View style={styles.titleContainer}>
 												<Text style={styles.title}>
 													{itemData.item.meal.title} ({itemData.item.quantity})
@@ -41,7 +29,7 @@ const ViewOrdersScreen = (props) => {
 									<View style={[styles.mealRow, styles.mealDetail]}>
 										<View style={styles.actionButtons}>
 											<Button
-												title="Remove"
+												title='Remove'
 												onPress={() => {
 													removeOrder(itemData.item.id);
 												}}

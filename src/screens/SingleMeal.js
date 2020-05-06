@@ -1,30 +1,26 @@
 import React, { useState, useContext } from 'react';
-import {
-	Text,
-	View,
-	StyleSheet,
-	Button,
-	ImageBackground,
-	TextInput,
-	TouchableWithoutFeedback,
-} from 'react-native';
-import MealContext from '../context/Context';
-import { FontAwesome } from 'react-native-vector-icons';
+import { Text, View, StyleSheet, Button, ImageBackground, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { Context } from '../context/Context';
+// import { FontAwesome } from 'react-native-vector-icons';
 import { Icon } from 'react-native-elements';
 
 const SingleMealScreen = (props) => {
-	const { state, addToOrder } = useContext(MealContext);
-	const meal = state.meals.find(
-		(meal) => meal.id === props.route.params.mealId
-	);
+	const { state, addToOrder } = useContext(Context);
+	const meal = state.meals.find((meal) => meal.id === props.route.params.mealId);
 	const [quantity, setQuantity] = useState('1');
+	const [favorite, setFavorite] = useState('false');
 	const order = {};
 
 	const orderMeal = () => {
 		order.meal = meal;
 		order.quantity = quantity;
+
 		addToOrder(order);
 	};
+
+	const setFav = () => {
+		order.favorite = favorite;
+	}
 
 	return (
 		<View style={styles.mealItem}>
@@ -33,10 +29,7 @@ const SingleMealScreen = (props) => {
 					{/* Top Card Section */}
 					{/* Meal Information and Description */}
 					<View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-						<ImageBackground
-							source={{ uri: meal.imageUrl }}
-							style={styles.imgBG}
-						>
+						<ImageBackground source={{ uri: meal.imageUrl }} style={styles.imgBG}>
 							<View style={styles.titleContainer}>
 								<Text style={styles.title}>
 									{meal.title} ${meal.price} ({meal.affordability})
@@ -47,27 +40,27 @@ const SingleMealScreen = (props) => {
 
 					{/* Bottom Card Section */}
 					<View style={[styles.mealRow, styles.mealDetail]}>
-							<TextInput
-								value={quantity}
-								keyboardType={'numeric'}
-								style={styles.numInput}
-								onChangeText={(quan) => {
-									setQuantity(quan);
-								}}
-							/>
+						<TextInput
+							value={quantity}
+							keyboardType={'numeric'}
+							style={styles.numInput}
+							onChangeText={(quan) => {
+								setQuantity(quan);
+							}}
+						/>
 						<View style={styles.actionButtons}>
 							{/* I need a quantity input :/ */}
-							<Button title="Order Now!" onPress={orderMeal} />
+							<Button title='Order Now!' onPress={orderMeal} />
 						</View>
 						<View style={[styles.mealRow, styles.mealDetail]}></View>
 						<Icon
 							raised
-							name="heart-o"
-							type="font-awesome"
-							color="#f50"
-							onPress={() => {
-								favMeal(fav);
-								console.log('hello', fav);
+							name='heart-o'
+							type='font-awesome'
+							color='#f50'
+							onPress={(fav) => {
+								setFavorite(fav);
+							
 							}}
 						/>
 					</View>
@@ -91,7 +84,7 @@ const styles = StyleSheet.create({
 		width: 40,
 		borderRadius: 5,
 		margin: 5,
-		backgroundColor:'white',
+		backgroundColor: 'white',
 	},
 	textInputStyle: {
 		height: 20,
