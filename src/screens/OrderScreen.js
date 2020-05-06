@@ -1,17 +1,20 @@
-import React, { useContext } from 'react';
-import MealContext from '../context/Context';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 
-import {
-	View,
-	Text,
-	StyleSheet,
-	FlatList,
-	TouchableOpacity,
-} from 'react-native';
+import { Context } from '../context/Context';
 
 const OrderScreen = (props) => {
-	const { state } = useContext(MealContext);
-	const meals = state.meals;
+	const { state, getMeals } = useContext(Context);
+
+	useEffect(() => {
+		getMeals();
+
+		const listener = props.navigation.addListener('focus', () => {
+			getMeals();
+		});
+
+		return listener;
+	}, []);
 
 	return (
 		<View>
@@ -19,7 +22,7 @@ const OrderScreen = (props) => {
 				<Text style={styles.title}>Welcome to Bruce's Diner!</Text>
 			</View>
 			<FlatList
-				data={meals}
+				data={state.meals}
 				renderItem={(itemData) => {
 					return (
 						<View style={styles.cardContainer}>

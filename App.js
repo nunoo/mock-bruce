@@ -1,26 +1,17 @@
 import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/navigation/AppNavigator';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { MealProvider } from './src/context/Context';
+import { Provider } from './src/context/Context';
 
 export default function App() {
-  return (
-    <MealProvider>
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1 }}>
-          <AppNavigator />
-        </SafeAreaView>
-      </NavigationContainer>
-    </MealProvider>
-  );
+	return (
+		<Provider>
+			<NavigationContainer>
+				<SafeAreaView style={{ flex: 1 }}>
+					<AppNavigator />
+				</SafeAreaView>
+			</NavigationContainer>
+		</Provider>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

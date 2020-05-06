@@ -1,13 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import MealContext from '../context/Context';
-import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { Context } from '../context/Context';
 
 const SingleMealScreen = (props) => {
-	const { state, addToOrder } = useContext(MealContext);
-	const meal = state.meals.find(
-		(meal) => meal.id === props.route.params.mealId
-	);
+	const { state, addToOrder } = useContext(Context);
+	const meal = state.meals.find((meal) => meal.id === props.route.params.mealId);
 	const [quantity, setQuantity] = useState('1');
 	const order = {};
 
@@ -21,8 +18,8 @@ const SingleMealScreen = (props) => {
 		<View style={styles.container}>
 			{/* Meal Information and Description */}
 			<View style={styles.infoCard}>
-				<Text>{meal.title}</Text>
-				<Text>${meal.price}</Text>
+				<Text style={styles.title}>{meal.title}</Text>
+				<Text>(${meal.price})</Text>
 				<Text>{meal.affordability}</Text>
 			</View>
 
@@ -37,7 +34,7 @@ const SingleMealScreen = (props) => {
 						setQuantity(quan);
 					}}
 				/>
-				<Button title="Order Now!" onPress={orderMeal} />
+				<Button title='Order Now!' onPress={orderMeal} />
 			</View>
 		</View>
 	);
@@ -48,10 +45,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 		margin: 10,
 	},
-	actionButtons: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
+	title: {
+		fontSize: 20,
+		color: '#ddd',
 	},
 	infoCard: {
 		height: 100,
@@ -60,8 +56,13 @@ const styles = StyleSheet.create({
 		backgroundColor: '#999',
 		borderRadius: 5,
 	},
+	actionButtons: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
 	numInput: {
-		borderColor: 'black',
+		borderColor: '#333',
 		borderWidth: 1,
 		height: 40,
 		width: 40,
